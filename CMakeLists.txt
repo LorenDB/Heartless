@@ -21,9 +21,23 @@ qt_add_qml_module(appHeartless
     URI Heartless
     VERSION 1.0
     QML_FILES
+        qml/AnimType.qml
+        qml/Balloon.qml
+        qml/Fountain.qml
         qml/main.qml
+        qml/MainPage.qml
+        qml/MultiStyleEmitter.qml
+        qml/SettingsPage.qml
+
     RESOURCES
         qml/logo.svg
+
+        qml/back.svg
+        qml/hamburger-menu.svg
+        qml/history.svg
+        qml/moon.svg
+        qml/plus.svg
+        qml/reset.svg
 )
 
 add_subdirectory(qml)

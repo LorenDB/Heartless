@@ -12,33 +12,37 @@ Player::Player(const QString &name, QObject *parent)
 Player::Player(short score, const QString &name, QObject *parent)
     : QObject{parent},
       m_name{name},
-      m_score{score}
+      m_scores{score}
 {}
 
 Player::Player(const Player &other)
     : QObject{other.parent()},
-      m_score{other.score()},
-      m_name{other.name()},
-      m_winner{other.winner()}
+      m_scores{other.m_scores},
+      m_name{other.m_name},
+      m_winner{other.m_winner}
 {}
 
 Player &Player::operator=(const Player &other)
 {
     setParent(other.parent());
-    m_score = other.score();
-    m_name = other.name();
-    m_winner = other.winner();
+    m_scores = other.m_scores;
+    m_name = other.m_name;
+    m_winner = other.m_winner;
 
     return *this;
 }
 
-void Player::setScore(short score)
+void Player::resetScore()
 {
-    if (score == m_score)
-        return;
-
-    m_score = score;
+    m_scores.clear();
     emit scoreChanged();
+}
+
+void Player::resetStagingScore()
+{
+    m_stagingScore = '0';
+    emit stagingScoreChanged();
+    emit stagingScoreReset();
 }
 
 void Player::setName(const QString &name)
@@ -59,8 +63,8 @@ void Player::setWinner(bool b)
     emit winnerChanged();
 }
 
-void Player::moonWasShot()
+void Player::addToScore(short points)
 {
-    m_score += 26;
+    m_scores.push_back(points);
     emit scoreChanged();
 }

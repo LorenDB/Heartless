@@ -1,61 +1,68 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls.Material
 import QtQuick.Layouts
+import QtQuick.Particles
+import Qt.labs.settings
 
 import Game
 
 Window {
-    width: 640
-    height: 480
+    id: rootWindow
+
+    width: 460
+    height: 614
+    minimumWidth: 225
     visible: true
     title: "Heartless"
+    Material.theme: Material.Dark
+
+    Settings {
+        id: settings
+
+        property var animation: AnimType.Fountain
+    }
 
     Game { id: game }
 
-    Page {
-        anchors.fill: parent
+    Drawer {
+        id: drawer
 
-        RowLayout {
+        edge: Qt.RightEdge
+        height: rootWindow.height
+        width: Math.min(300, rootWindow.width * 0.667)
+
+        ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 10
-            spacing: 10
 
-            ColumnLayout {
-                spacing: 10
+            ToolButton {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
-
-                Row {
-                    spacing: 10
-                    Layout.fillWidth: true
-
-                    Label {
-                        font.pointSize: 16
-                        text: game.player1.name
-                    }
-
-                    Image {
-                        height: parent.height
-                        width: height
-                        fillMode: Image.PreserveAspectFit
-                        source: Qt.resolvedUrl("logo.svg")
-                        visible: game.player1.winner
-                    }
-                }
-
-                Button {
-                    text: qsTr("Shoot the moon")
-                    onClicked: game.player1.shootTheMoon()
+                text: qsTr("Settings")
+                onClicked: {
+                    drawer.close()
+                    sv.push(settingsPageComponent)
                 }
             }
-        }
 
-//        Image {
-//            anchors.centerIn: parent
-//            width: 350
-//            height: 300
-//            fillMode: Image.PreserveAspectFit
-//            source: Qt.resolvedUrl("logo.svg")
-//        }
+            Item { Layout.fillHeight: true }
+        }
+    }
+
+    Component {
+        id: mainPageComponent
+
+        MainPage {}
+    }
+
+    Component {
+        id: settingsPageComponent
+
+        SettingsPage { onGoBack: sv.pop() }
+    }
+
+    StackView {
+        id: sv
+
+        anchors.fill: parent
+        initialItem: mainPageComponent
     }
 }

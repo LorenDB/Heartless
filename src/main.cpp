@@ -9,6 +9,10 @@ Q_IMPORT_QML_PLUGIN(GamePlugin)
 
 int main(int argc, char *argv[])
 {
+    QGuiApplication::setApplicationName("Heartless");
+    QGuiApplication::setOrganizationName("Loren Burkholder");
+    QGuiApplication::setOrganizationDomain("io.github.LorenDB");
+
     QGuiApplication app{argc, argv};
 
     QTranslator translator;
