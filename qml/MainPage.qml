@@ -52,6 +52,7 @@ Page {
             standardButtons: Dialog.Ok | Dialog.Cancel
             onAccepted: game.players[index].name = nameInput.text
             modal: true
+            focus: true
 
             TextField {
                 id: nameInput
@@ -60,6 +61,8 @@ Page {
                 anchors.fill: parent
                 onAccepted: changePlayerNameDialogImpl.accept()
                 selectByMouse: true
+                Component.onCompleted: selectAll()
+                focus: true
             }
         }
     }
