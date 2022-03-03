@@ -29,6 +29,11 @@ Page {
                 }
 
                 Item { Layout.fillWidth: true }
+
+                ToolButton {
+                    icon.source: Qt.resolvedUrl("hamburger-menu.svg")
+                    onClicked: drawer.open()
+                }
             }
         }
 
@@ -61,6 +66,8 @@ Page {
                         width: Math.min(sv.width - 20, 500)
                         anchors.horizontalCenter: mainLayoutContainer.horizontalCenter
                         columns: 2
+                        columnSpacing: 10
+                        rowSpacing: 10
 
                         Label {
                             text: qsTr("End-of-game animation")
