@@ -37,7 +37,11 @@ void Game::checkForWinner()
         scores.push_back(player->score());
     std::sort(scores.begin(), scores.end(), [](const auto &a, const auto&b) { return a < b; });
     if (scores.last() < 100)
+    {
+        for (auto player: m_players)
+            player->setWinner(false);
         return;
+    }
 
     for (auto player : m_players)
         if (player->score() == scores.front())
@@ -65,7 +69,12 @@ void Game::reset()
 void Game::undoLastMove()
 {
     for (auto &player : m_players)
+    {
+        disconnect(player, &Player::scoreChanged, this, &Game::checkForWinner);
         player->undoLastMove();
+        connect(player, &Player::scoreChanged, this, &Game::checkForWinner);
+    }
+    checkForWinner();
 }
 
 void Game::redo()
