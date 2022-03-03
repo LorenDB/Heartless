@@ -20,8 +20,6 @@ Game::Game(QObject *parent)
         });
         connect(player, &Player::stagingScoreChanged, this, [this] {
             QVector<short> stagingScores;
-        //    std::transform(m_players.cbegin(), m_players.cend(), scores.begin(), [](auto p) { return p->score(); });
-//            std::transform(m_players.begin(), m_players.end(), stagingScores.begin(), [](auto p) { return p->stagingScore(); });
             for (auto player : m_players)
                 stagingScores.push_back(player->stagingScore());
             m_stagingScoresReady = (std::accumulate(stagingScores.begin(), stagingScores.end(), 0, std::plus<short>()) == 26);
@@ -34,7 +32,6 @@ Game::Game(QObject *parent)
 void Game::checkForWinner()
 {
     QVector<short> scores;
-//    std::transform(m_players.cbegin(), m_players.cend(), scores.begin(), [](auto p) { return p->score(); });
     for (auto player : m_players)
         scores.push_back(player->score());
     std::sort(scores.begin(), scores.end(), [](const auto &a, const auto&b) { return a < b; });
