@@ -42,42 +42,49 @@ Page {
             Flickable {
                 width: sv.width
                 height: sv.height
-                contentWidth: mainLayout.width
-                contentHeight: mainLayout.height
+                contentWidth: mainLayoutContainer.width
+                contentHeight: mainLayoutContainer.height
                 anchors.margins: 10
                 leftMargin: 10
                 rightMargin: 10
                 bottomMargin: 10
                 topMargin: 10
 
-                GridLayout {
-                    id: mainLayout
-
+                Item {
+                    id: mainLayoutContainer
                     width: sv.width - 20
-                    columns: 2
+                    height: mainLayout.implicitHeight
 
-                    Label {
-                        text: qsTr("End-of-game animation")
-                        Layout.fillWidth: true
-                    }
+                    GridLayout {
+                        id: mainLayout
 
-                    ComboBox {
-                        textRole: "text"
-                        valueRole: "value"
-                        onActivated: settings.animation = currentValue
-                        currentIndex: settings.animation
-                        model: ListModel {
-                            ListElement {
-                                text: qsTr("Balloon")
-                                value: AnimType.Balloon
-                            }
-                            ListElement {
-                                text: qsTr("Fountain")
-                                value: AnimType.Fountain
-                            }
-                            ListElement {
-                                text: qsTr("None")
-                                value: AnimType.None
+                        width: Math.min(sv.width - 20, 500)
+                        anchors.horizontalCenter: mainLayoutContainer.horizontalCenter
+                        columns: 2
+
+                        Label {
+                            text: qsTr("End-of-game animation")
+                            Layout.fillWidth: true
+                        }
+
+                        ComboBox {
+                            textRole: "text"
+                            valueRole: "value"
+                            onActivated: settings.animation = currentValue
+                            currentIndex: settings.animation
+                            model: ListModel {
+                                ListElement {
+                                    text: qsTr("Balloon")
+                                    value: AnimType.Balloon
+                                }
+                                ListElement {
+                                    text: qsTr("Fountain")
+                                    value: AnimType.Fountain
+                                }
+                                ListElement {
+                                    text: qsTr("None")
+                                    value: AnimType.None
+                                }
                             }
                         }
                     }
