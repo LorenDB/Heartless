@@ -17,6 +17,17 @@ Window {
     Material.theme: settings.theme
     Material.primary: settings.primary
     Material.accent: settings.accent
+    // this back key handling method comes from https://stackoverflow.com/a/67357598/12533859
+    Component.onCompleted: {
+        contentItem.Keys.released.connect(function(event) {
+            if (event.key === Qt.Key_Back && rootStackView.depth > 1) {
+                event.accepted = true
+                rootStackView.pop()
+            }
+            else
+                event.accepted = false
+        })
+    }
 
     Settings {
         id: settings
