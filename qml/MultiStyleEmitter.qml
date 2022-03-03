@@ -37,7 +37,7 @@ Item {
             case AnimType.Balloon:
                 return 10 * Math.sqrt(emitterRoot.width * emitterRoot.height) / 450
             case AnimType.Fountain:
-                return 100 * Math.sqrt(emitterRoot.width * emitterRoot.height) / 450
+                return 80 * Math.sqrt(emitterRoot.width * emitterRoot.height) / 450
             case AnimType.None:
                 return 0
             }
