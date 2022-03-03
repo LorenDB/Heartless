@@ -40,6 +40,7 @@ public slots:
     void addToScore(short points);
     void undoLastMove();
     void redo();
+    void reset();
 
 signals:
     void scoreChanged();

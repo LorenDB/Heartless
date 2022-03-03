@@ -53,8 +53,7 @@ void Game::reset()
     for (auto &player : m_players)
     {
         disconnect(player, &Player::scoreChanged, this, &Game::checkForWinner);
-        player->setWinner(false);
-        player->resetScore();
+        player->reset();
         connect(player, &Player::scoreChanged, this, &Game::checkForWinner);
     }
 

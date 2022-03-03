@@ -90,3 +90,11 @@ void Player::redo()
     emit redoScoresChanged();
     emit scoreChanged();
 }
+
+void Player::reset()
+{
+    resetScore();
+    resetStagingScore();
+    m_redoScores.clear();
+    emit redoScoresChanged();
+}
