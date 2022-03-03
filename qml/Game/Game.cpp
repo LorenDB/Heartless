@@ -35,7 +35,7 @@ void Game::checkForWinner()
     QVector<short> scores;
     for (auto player : m_players)
         scores.push_back(player->score());
-    std::sort(scores.begin(), scores.end(), [](const auto &a, const auto&b) { return a < b; });
+    std::sort(scores.begin(), scores.end(), std::less<>());
     if (scores.last() < 100)
     {
         for (auto player: m_players)
