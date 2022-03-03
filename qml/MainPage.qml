@@ -12,7 +12,7 @@ Page {
     Connections {
         function onGameOverChanged()
         {
-            if (game.gameOver && settings.animation != AnimType.None)
+            if (game.gameOver && settings.animation !== AnimType.None)
                 emitter.emitter.pulse(2000)
         }
 

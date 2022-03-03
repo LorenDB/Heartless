@@ -118,7 +118,7 @@ Item {
     }
 
     Friction {
-        enabled: settings.animation == AnimType.Fountain
+        enabled: settings.animation === AnimType.Fountain
         system: emitterRoot.particleSystem
         anchors.fill: parent
         factor: 5 * 1000 / emitterRoot.height
@@ -126,7 +126,7 @@ Item {
     }
 
     Gravity {
-        enabled: settings.animation == AnimType.Fountain
+        enabled: settings.animation === AnimType.Fountain
         system: emitterRoot.particleSystem
         anchors.fill: parent
         magnitude: 1000 * 500 / emitterRoot.height
@@ -134,7 +134,7 @@ Item {
     }
 
     Turbulence {
-        enabled: settings.animation == AnimType.Balloon
+        enabled: settings.animation === AnimType.Balloon
         anchors.fill: emitterRoot
         strength: 75
         system: emitterRoot.particleSystem
