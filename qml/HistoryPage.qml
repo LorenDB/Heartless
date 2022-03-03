@@ -83,7 +83,7 @@ Page {
                                     Label {
                                         id: name
 
-                                        font.pointSize: 16
+                                        font.pixelSize: 22
                                         text: game.players[index].name
                                         font.bold: true
                                     }
@@ -107,7 +107,7 @@ Page {
                                 }
 
                                 Label {
-                                    font.pointSize: 12
+                                    font.pixelSize: 20
                                     text: qsTr("Total: ") + game.players[index].score
                                 }
                             }
