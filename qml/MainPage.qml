@@ -39,6 +39,31 @@ Page {
         }
     }
 
+    Component {
+        id: changePlayerNameDialog
+
+        Dialog {
+            id: changePlayerNameDialogImpl
+
+            property int index
+
+            title: qsTr("Change player's name")
+            anchors.centerIn: mainPageRoot
+            standardButtons: Dialog.Ok | Dialog.Cancel
+            onAccepted: game.players[index].name = nameInput.text
+            modal: true
+
+            TextField {
+                id: nameInput
+
+                text: game.players[index].name
+                anchors.fill: parent
+                onAccepted: changePlayerNameDialogImpl.accept()
+                selectByMouse: true
+            }
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
@@ -131,6 +156,16 @@ Page {
                                     font.pointSize: 16
                                     text: game.players[index].name
                                     font.bold: true
+                                }
+
+                                ToolButton {
+                                    icon.source: Qt.resolvedUrl("edit.svg")
+                                    onClicked: {
+                                        let dialog = changePlayerNameDialog.createObject(mainPageRoot, {
+                                            "index": index
+                                        })
+                                        dialog.open()
+                                    }
                                 }
 
                                 Image {
