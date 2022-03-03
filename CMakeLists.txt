@@ -22,8 +22,6 @@ qt_add_qml_module(appHeartless
     VERSION 1.0
     QML_FILES
         qml/AnimType.qml
-        qml/Balloon.qml
-        qml/Fountain.qml
         qml/main.qml
         qml/MainPage.qml
         qml/MultiStyleEmitter.qml
