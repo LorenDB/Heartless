@@ -55,7 +55,7 @@ void Game::checkForWinner()
 
 void Game::reset()
 {
-    for (auto &player : m_players)
+    for (auto player : m_players)
     {
         disconnect(player, &Player::scoreChanged, this, &Game::checkForWinner);
         player->reset();
@@ -68,7 +68,7 @@ void Game::reset()
 
 void Game::undoLastMove()
 {
-    for (auto &player : m_players)
+    for (auto player : m_players)
     {
         disconnect(player, &Player::scoreChanged, this, &Game::checkForWinner);
         player->undoLastMove();
@@ -79,13 +79,13 @@ void Game::undoLastMove()
 
 void Game::redo()
 {
-    for (auto &player : m_players)
+    for (auto player : m_players)
         player->redo();
 }
 
 void Game::commitStagingScores()
 {
-    for (auto &player : m_players)
+    for (auto player : m_players)
     {
         player->addToScore(player->stagingScore());
         player->resetStagingScore();
