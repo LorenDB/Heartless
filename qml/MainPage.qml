@@ -147,7 +147,6 @@ Page {
                             Layout.fillHeight: true
 
                             RowLayout {
-                                spacing: 10
                                 Layout.preferredWidth: del.width
 
                                 Label {
