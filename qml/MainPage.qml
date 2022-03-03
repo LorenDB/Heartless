@@ -161,6 +161,7 @@ Page {
                                 validator: IntValidator { bottom: 0; top: 25 }
                                 onTextChanged: game.players[index].stagingScore = text
                                 enabled: !game.gameOver
+                                inputMethodHints: Qt.ImhDigitsOnly
 
                                 Connections {
                                     function onStagingScoreReset() {
