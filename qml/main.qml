@@ -19,7 +19,7 @@ Window {
     Settings {
         id: settings
 
-        property var animation: AnimType.Fountain
+        property int animation: AnimType.Fountain
     }
 
     Game { id: game }
