@@ -14,12 +14,17 @@ Window {
     minimumWidth: 225
     visible: true
     title: "Heartless"
-    Material.theme: Material.Dark
+    Material.theme: settings.theme
+    Material.primary: settings.primary
+    Material.accent: settings.accent
 
     Settings {
         id: settings
 
         property int animation: AnimType.Fountain
+        property int theme: Material.System
+        property int primary: Material.Indigo
+        property int accent: Material.Pink
     }
 
     Game { id: game }
