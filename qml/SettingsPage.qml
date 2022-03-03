@@ -23,7 +23,7 @@ Page {
                     text: qsTr("Back")
                     ToolTip.text: text
                     onClicked: rootStackView.pop()
-                    display: toolBar.width < 500 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+                    display: toolBar.width < 650 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
                 }
 
                 Item { Layout.fillWidth: true }

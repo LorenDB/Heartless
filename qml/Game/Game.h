@@ -41,6 +41,8 @@ signals:
 public slots:
     void checkForWinner();
     void reset();
+    void undoLastMove();
+    void redo();
 
     void commitStagingScores();
 

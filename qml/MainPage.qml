@@ -71,6 +71,8 @@ Page {
         ToolBar {
             id: toolBar
 
+            property int buttonDisplay: toolBar.width < 650 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+
             Layout.fillWidth: true
 
             RowLayout {
@@ -82,15 +84,33 @@ Page {
                     enabled: game.stagingScoresReady
                     onClicked: game.commitStagingScores()
                     ToolTip.text: text
-                    display: toolBar.width < 500 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+                    display: toolBar.buttonDisplay
                 }
 
                 ToolButton {
                     text: qsTr("Score history")
                     icon.source: Qt.resolvedUrl("history.svg")
                     ToolTip.text: text
-                    display: toolBar.width < 500 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+                    display: toolBar.buttonDisplay
                     onClicked: rootStackView.push(historyPageComponent)
+                }
+
+                ToolButton {
+                    text: qsTr("Undo")
+                    icon.source: Qt.resolvedUrl("undo.svg")
+                    enabled: game.players[0].scores.length > 0
+                    onClicked: game.undoLastMove()
+                    ToolTip.text: text
+                    display: toolBar.buttonDisplay
+                }
+
+                ToolButton {
+                    text: qsTr("Redo")
+                    icon.source: Qt.resolvedUrl("redo.svg")
+                    enabled: game.players[0].redoScores.length > 0
+                    onClicked: game.redo()
+                    ToolTip.text: text
+                    display: toolBar.buttonDisplay
                 }
 
                 ToolButton {
@@ -98,7 +118,7 @@ Page {
                     icon.source: Qt.resolvedUrl("reset.svg")
                     onClicked: confirmResetGame.open()
                     ToolTip.text: text
-                    display: toolBar.width < 500 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+                    display: toolBar.buttonDisplay
                 }
 
                 Item { Layout.fillWidth: true }

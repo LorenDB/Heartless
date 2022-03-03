@@ -14,5 +14,7 @@ If you want to add a new icon but can't find the right one, try looking at [flue
 | history.svg | History |
 | moon.svg | Sleep (note: was modified to be just a moon instead of including a musical note) |
 | plus.svg | Add |
+| redo.svg | Arrow Redo |
 | reset.svg | Arrow Reset |
 | settings.svg | Settings |
+| undo.svg | Arrow Undo |

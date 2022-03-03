@@ -68,3 +68,25 @@ void Player::addToScore(short points)
     m_scores.push_back(points);
     emit scoreChanged();
 }
+
+void Player::undoLastMove()
+{
+    if (m_scores.isEmpty())
+        return;
+
+    m_redoScores.push_back(m_scores.last());
+    m_scores.pop_back();
+    emit redoScoresChanged();
+    emit scoreChanged();
+}
+
+void Player::redo()
+{
+    if (m_redoScores.isEmpty())
+        return;
+
+    m_scores.push_back(m_redoScores.last());
+    m_redoScores.pop_back();
+    emit redoScoresChanged();
+    emit scoreChanged();
+}

@@ -37,8 +37,10 @@ qt_add_qml_module(appHeartless
         qml/history.svg
         qml/moon.svg
         qml/plus.svg
+        qml/redo.svg
         qml/reset.svg
         qml/settings.svg
+        qml/undo.svg
 )
 
 add_subdirectory(qml)

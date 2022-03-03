@@ -62,6 +62,18 @@ void Game::reset()
     emit gameOverChanged();
 }
 
+void Game::undoLastMove()
+{
+    for (auto &player : m_players)
+        player->undoLastMove();
+}
+
+void Game::redo()
+{
+    for (auto &player : m_players)
+        player->redo();
+}
+
 void Game::commitStagingScores()
 {
     for (auto &player : m_players)
