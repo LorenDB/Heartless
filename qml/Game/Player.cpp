@@ -93,6 +93,7 @@ void Player::redo()
 
 void Player::reset()
 {
+    setWinner(false);
     resetScore();
     resetStagingScore();
     m_redoScores.clear();
