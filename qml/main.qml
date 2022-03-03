@@ -34,9 +34,10 @@ Window {
         ColumnLayout {
             anchors.fill: parent
 
-            ToolButton {
+            ItemDelegate {
                 Layout.fillWidth: true
                 text: qsTr("Settings")
+                icon.source: Qt.resolvedUrl("settings.svg")
                 onClicked: {
                     drawer.close()
                     sv.push(settingsPageComponent)
