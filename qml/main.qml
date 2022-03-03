@@ -40,7 +40,7 @@ Window {
                 icon.source: Qt.resolvedUrl("settings.svg")
                 onClicked: {
                     drawer.close()
-                    sv.push(settingsPageComponent)
+                    rootStackView.push(settingsPageComponent)
                 }
             }
 
@@ -57,11 +57,11 @@ Window {
     Component {
         id: settingsPageComponent
 
-        SettingsPage { onGoBack: sv.pop() }
+        SettingsPage {}
     }
 
     StackView {
-        id: sv
+        id: rootStackView
 
         anchors.fill: parent
         initialItem: mainPageComponent

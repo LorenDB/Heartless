@@ -6,8 +6,6 @@ import Qt.labs.settings
 Page {
     id: settingsPageRoot
 
-    signal goBack()
-
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
@@ -24,7 +22,7 @@ Page {
                     icon.source: Qt.resolvedUrl("back.svg")
                     text: qsTr("Back")
                     ToolTip.text: text
-                    onClicked: settingsPageRoot.goBack()
+                    onClicked: rootStackView.pop()
                     display: toolBar.width < 500 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
                 }
 
