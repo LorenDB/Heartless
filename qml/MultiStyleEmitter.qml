@@ -45,7 +45,7 @@ Item {
         lifeSpan: {
             switch (settings.animation) {
             case AnimType.Balloon:
-                return 3000 * emitterRoot.height / 750
+                return 3000 * emitterRoot.height / 675
             case AnimType.Fountain:
                 return 3000 * Math.sqrt(emitterRoot.height) / 26.6
             case AnimType.None:
