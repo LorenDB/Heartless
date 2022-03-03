@@ -53,10 +53,13 @@ Page {
                 GridLayout {
                     id: mainLayout
 
-                    width: sv.width
+                    width: sv.width - 20
                     columns: 2
 
-                    Label { text: qsTr("Animation") }
+                    Label {
+                        text: qsTr("End-of-game animation")
+                        Layout.fillWidth: true
+                    }
 
                     ComboBox {
                         textRole: "text"
