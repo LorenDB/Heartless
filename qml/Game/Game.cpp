@@ -22,7 +22,8 @@ Game::Game(QObject *parent)
             QVector<short> stagingScores;
             for (auto player : m_players)
                 stagingScores.push_back(player->stagingScore());
-            m_stagingScoresReady = (std::accumulate(stagingScores.begin(), stagingScores.end(), 0, std::plus<short>()) == 26);
+            std::sort(stagingScores.begin(), stagingScores.end(), std::less<>());
+            m_stagingScoresReady = (std::accumulate(stagingScores.begin(), stagingScores.end(), 0, std::plus<short>()) == 26) && (stagingScores.last() >= 13);
             emit stagingScoresReadyChanged();
         });
         connect(player, &Player::scoreChanged, this, &Game::checkForWinner);
