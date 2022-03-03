@@ -13,8 +13,9 @@ Game::Game(QObject *parent)
             for (auto otherPlayer : m_players)
             {
                 if (player == otherPlayer)
-                    continue;
-                otherPlayer->addToScore(26);
+                    player->addToScore(0);
+                else
+                    otherPlayer->addToScore(26);
             }
         });
         connect(player, &Player::stagingScoreChanged, this, [this] {

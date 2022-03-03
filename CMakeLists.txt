@@ -22,6 +22,7 @@ qt_add_qml_module(appHeartless
     VERSION 1.0
     QML_FILES
         qml/AnimType.qml
+        qml/HistoryPage.qml
         qml/main.qml
         qml/MainPage.qml
         qml/MultiStyleEmitter.qml

@@ -19,6 +19,12 @@ Page {
         target: game
     }
 
+    Component {
+        id: historyPageComponent
+
+        HistoryPage {}
+    }
+
     Dialog {
         id: confirmResetGame
 
@@ -59,8 +65,7 @@ Page {
                     icon.source: Qt.resolvedUrl("history.svg")
                     ToolTip.text: text
                     display: toolBar.width < 500 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
-                    // TODO: add this functionality
-                    enabled: false
+                    onClicked: rootStackView.push(historyPageComponent)
                 }
 
                 ToolButton {
