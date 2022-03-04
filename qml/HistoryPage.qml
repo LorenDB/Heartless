@@ -21,6 +21,7 @@ Page {
                     icon.source: Qt.resolvedUrl("back.svg")
                     text: qsTr("Back")
                     ToolTip.text: text
+                    ToolTip.visible: hovered
                     onClicked: rootStackView.pop()
                     display: toolBar.width < 500 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
                 }
@@ -29,6 +30,8 @@ Page {
 
                 ToolButton {
                     icon.source: Qt.resolvedUrl("hamburger-menu.svg")
+                    ToolTip.text: qsTr("Menu")
+                    ToolTip.visible: hovered
                     onClicked: drawer.open()
                 }
             }

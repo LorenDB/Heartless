@@ -87,6 +87,7 @@ Page {
                     enabled: game.stagingScoresReady
                     onClicked: game.commitStagingScores()
                     ToolTip.text: text
+                    ToolTip.visible: hovered
                     display: toolBar.buttonDisplay
                 }
 
@@ -94,6 +95,7 @@ Page {
                     text: qsTr("Score history")
                     icon.source: Qt.resolvedUrl("history.svg")
                     ToolTip.text: text
+                    ToolTip.visible: hovered
                     display: toolBar.buttonDisplay
                     onClicked: rootStackView.push(historyPageComponent)
                 }
@@ -104,6 +106,7 @@ Page {
                     enabled: game.players[0].scores.length > 0
                     onClicked: game.undoLastMove()
                     ToolTip.text: text
+                    ToolTip.visible: hovered
                     display: toolBar.buttonDisplay
                 }
 
@@ -113,6 +116,7 @@ Page {
                     enabled: game.players[0].redoScores.length > 0
                     onClicked: game.redo()
                     ToolTip.text: text
+                    ToolTip.visible: hovered
                     display: toolBar.buttonDisplay
                 }
 
@@ -121,6 +125,7 @@ Page {
                     icon.source: Qt.resolvedUrl("reset.svg")
                     onClicked: confirmResetGame.open()
                     ToolTip.text: text
+                    ToolTip.visible: hovered
                     display: toolBar.buttonDisplay
                 }
 
@@ -128,6 +133,8 @@ Page {
 
                 ToolButton {
                     icon.source: Qt.resolvedUrl("hamburger-menu.svg")
+                    ToolTip.text: qsTr("Menu")
+                    ToolTip.visible: hovered
                     onClicked: drawer.open()
                 }
             }
@@ -182,6 +189,8 @@ Page {
 
                                 ToolButton {
                                     icon.source: Qt.resolvedUrl("edit.svg")
+                                    ToolTip.text: qsTr("Edit name")
+                                    ToolTip.visible: hovered
                                     onClicked: {
                                         let dialog = changePlayerNameDialog.createObject(mainPageRoot, {
                                             "index": index
@@ -207,6 +216,7 @@ Page {
                                     height: name.implicitHeight
                                     text: qsTr("Shoot the moon")
                                     ToolTip.text: text
+                                    ToolTip.visible: hovered
                                     display: mainLayout.width / mainLayout.columns < 250 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
                                 }
                             }
