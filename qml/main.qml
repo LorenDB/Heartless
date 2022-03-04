@@ -77,6 +77,16 @@ Window {
                 }
             }
 
+            ItemDelegate {
+                Layout.fillWidth: true
+                text: qsTr("About Heartless")
+                icon.source: Qt.resolvedUrl("info.svg")
+                onClicked: {
+                    drawer.close()
+                    rootStackView.push(aboutPageComponent)
+                }
+            }
+
             Item { Layout.fillHeight: true }
         }
     }
@@ -91,6 +101,12 @@ Window {
         id: settingsPageComponent
 
         SettingsPage {}
+    }
+
+    Component {
+        id: aboutPageComponent
+
+        AboutPage {}
     }
 
     StackView {

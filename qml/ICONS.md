@@ -12,6 +12,7 @@ If you want to add a new icon but can't find the right one, try looking at [flue
 | edit.svg | Edit |
 | hamburger-menu.svg | Line Horizontal 3 |
 | history.svg | History |
+| info.svg | Info |
 | license.svg | Gavel |
 | moon.svg | Sleep (note: was modified to be just a moon instead of including a musical note) |
 | plus.svg | Add |

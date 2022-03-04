@@ -21,6 +21,7 @@ qt_add_qml_module(appHeartless
     URI Heartless
     VERSION 1.0
     QML_FILES
+        qml/AboutPage.qml
         qml/AnimType.qml
         qml/HistoryPage.qml
         qml/main.qml
@@ -35,6 +36,7 @@ qt_add_qml_module(appHeartless
         qml/edit.svg
         qml/hamburger-menu.svg
         qml/history.svg
+        qml/info.svg
         qml/license.svg
         qml/moon.svg
         qml/plus.svg
