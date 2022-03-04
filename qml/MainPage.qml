@@ -177,7 +177,7 @@ Page {
                             Layout.fillHeight: true
 
                             RowLayout {
-                                Layout.preferredWidth: del.width
+                                Layout.fillWidth: true
 
                                 Label {
                                     id: name
@@ -185,18 +185,6 @@ Page {
                                     font.pixelSize: 22
                                     text: game.players[index].name
                                     font.bold: true
-                                }
-
-                                ToolButton {
-                                    icon.source: Qt.resolvedUrl("edit.svg")
-                                    ToolTip.text: qsTr("Edit name")
-                                    ToolTip.visible: hovered
-                                    onClicked: {
-                                        let dialog = changePlayerNameDialog.createObject(mainPageRoot, {
-                                            "index": index
-                                        })
-                                        dialog.open()
-                                    }
                                 }
 
                                 Image {
@@ -210,14 +198,15 @@ Page {
                                 Item { Layout.fillWidth: true }
 
                                 ToolButton {
-                                    icon.source: Qt.resolvedUrl("moon.svg")
-                                    onClicked: game.players[index].shootTheMoon()
-                                    enabled: !game.gameOver
-                                    height: name.implicitHeight
-                                    text: qsTr("Shoot the moon")
-                                    ToolTip.text: text
+                                    icon.source: Qt.resolvedUrl("edit.svg")
+                                    ToolTip.text: qsTr("Edit name")
                                     ToolTip.visible: hovered
-                                    display: mainLayout.width / mainLayout.columns < 250 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+                                    onClicked: {
+                                        let dialog = changePlayerNameDialog.createObject(mainPageRoot, {
+                                            "index": index
+                                        })
+                                        dialog.open()
+                                    }
                                 }
                             }
 
@@ -226,21 +215,38 @@ Page {
                                 text: game.players[index].score
                             }
 
-                            TextField {
-                                id: pointInput
+                            RowLayout {
+                                Layout.fillWidth: true
 
-                                placeholderText: qsTr("Add points")
-                                validator: IntValidator { bottom: 0; top: 25 }
-                                onTextChanged: game.players[index].stagingScore = text
-                                enabled: !game.gameOver
-                                inputMethodHints: Qt.ImhDigitsOnly
+                                TextField {
+                                    id: pointInput
 
-                                Connections {
-                                    function onStagingScoreReset() {
-                                        pointInput.clear()
+                                    placeholderText: qsTr("Add points")
+                                    validator: IntValidator { bottom: 0; top: 25 }
+                                    onTextChanged: game.players[index].stagingScore = text
+                                    enabled: !game.gameOver
+                                    inputMethodHints: Qt.ImhDigitsOnly
+
+                                    Connections {
+                                        function onStagingScoreReset() {
+                                            pointInput.clear()
+                                        }
+
+                                        target: game.players[index]
                                     }
+                                }
 
-                                    target: game.players[index]
+                                Item { Layout.fillWidth: true }
+
+                                ToolButton {
+                                    icon.source: Qt.resolvedUrl("moon.svg")
+                                    onClicked: game.players[index].shootTheMoon()
+                                    enabled: !game.gameOver
+                                    height: name.implicitHeight
+                                    text: qsTr("Shoot the moon")
+                                    ToolTip.text: text
+                                    ToolTip.visible: hovered
+                                    display: mainLayout.width / mainLayout.columns < 305 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
                                 }
                             }
                         }
