@@ -9,6 +9,7 @@ If you want to add a new icon but can't find the right one, try looking at [flue
 | **Filename** | **Icon name** |
 |-|-|
 | back.svg | Arrow Left |
+| code.svg | Code |
 | edit.svg | Edit |
 | hamburger-menu.svg | Line Horizontal 3 |
 | history.svg | History |
