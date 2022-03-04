@@ -92,11 +92,26 @@ Page {
                         rowSpacing: 10
 
                         Label {
+                            text: qsTr("Target score")
+                            Layout.fillWidth: true
+                        }
+
+                        SpinBox {
+                            Layout.alignment: Qt.AlignRight
+                            from: 13
+                            to: 2147483647 // INT_MAX according to docs.microsoft.com/en-us/cpp/cpp/integer-limits
+                            value: settings.targetScore
+                            onValueChanged: settings.targetScore = value
+                            editable: true
+                        }
+
+                        Label {
                             text: qsTr("End-of-game animation")
                             Layout.fillWidth: true
                         }
 
                         ComboBox {
+                            Layout.alignment: Qt.AlignRight
                             textRole: "text"
                             valueRole: "value"
                             onActivated: settings.animation = currentValue
@@ -123,6 +138,7 @@ Page {
                         }
 
                         ComboBox {
+                            Layout.alignment: Qt.AlignRight
                             textRole: "text"
                             valueRole: "value"
                             currentIndex: settings.theme
@@ -140,6 +156,7 @@ Page {
                         }
 
                         ComboBox {
+                            Layout.alignment: Qt.AlignRight
                             textRole: "text"
                             valueRole: "value"
                             currentIndex: settings.primary
@@ -153,6 +170,7 @@ Page {
                         }
 
                         ComboBox {
+                            Layout.alignment: Qt.AlignRight
                             textRole: "text"
                             valueRole: "value"
                             currentIndex: settings.accent

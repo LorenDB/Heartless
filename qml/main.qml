@@ -36,9 +36,14 @@ Window {
         property int theme: Material.System
         property int primary: Material.Indigo
         property int accent: Material.Pink
+        property int targetScore: 100
     }
 
-    Game { id: game }
+    Game {
+        id: game
+
+        targetScore: settings.targetScore
+    }
 
     Drawer {
         id: drawer

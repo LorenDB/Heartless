@@ -30,13 +30,23 @@ Game::Game(QObject *parent)
     }
 }
 
+void Game::setTargetScore(int target)
+{
+    // 13 is the lowest possible high score for a game of one round, so don't use anything smaller than that
+    if (target < 13)
+        return;
+
+    m_targetScore = target;
+    targetScoreChanged();
+}
+
 void Game::checkForWinner()
 {
     QVector<short> scores;
     for (auto player : m_players)
         scores.push_back(player->score());
     std::sort(scores.begin(), scores.end(), std::less<>());
-    if (scores.last() < 100)
+    if (scores.last() < m_targetScore)
     {
         for (auto player: m_players)
             player->setWinner(false);

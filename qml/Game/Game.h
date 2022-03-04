@@ -18,6 +18,7 @@ class Game : public QObject
     Q_PROPERTY(Player * player2 READ player2 CONSTANT)
     Q_PROPERTY(Player * player3 READ player3 CONSTANT)
     Q_PROPERTY(Player * player4 READ player4 CONSTANT)
+    Q_PROPERTY(int targetScore READ targetScore WRITE setTargetScore NOTIFY targetScoreChanged)
     Q_PROPERTY(bool gameOver READ gameOver NOTIFY gameOverChanged)
     Q_PROPERTY(bool stagingScoresReady READ stagingScoresReady NOTIFY stagingScoresReadyChanged)
 
@@ -31,10 +32,14 @@ public:
 
     QVector<Player *> players() { return m_players; }
 
+    int targetScore() const { return m_targetScore; }
     bool gameOver() const { return m_gameOver; }
     bool stagingScoresReady() const { return m_stagingScoresReady; }
 
+    void setTargetScore(int target);
+
 signals:
+    void targetScoreChanged();
     void gameOverChanged();
     void stagingScoresReadyChanged();
 
@@ -49,6 +54,7 @@ public slots:
 private:
     QVector<Player *> m_players;
 
+    int m_targetScore{100};
     bool m_gameOver{false};
     bool m_stagingScoresReady{false};
 };
