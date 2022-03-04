@@ -11,7 +11,7 @@ Window {
 
     width: 460
     height: 614
-    minimumWidth: 225
+    minimumWidth: 320
     visible: true
     title: "Heartless"
     Material.theme: settings.theme
@@ -54,6 +54,7 @@ Window {
 
         ColumnLayout {
             anchors.fill: parent
+            spacing: 0
 
             ItemDelegate {
                 Layout.fillWidth: true
