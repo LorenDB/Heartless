@@ -65,6 +65,17 @@ Window {
                 }
             }
 
+            ItemDelegate {
+                Layout.fillWidth: true
+                text: qsTr("View license online")
+                icon.source: Qt.resolvedUrl("license.svg")
+                onClicked: {
+                    drawer.close()
+                    // TODO: figure out how to open actual license file in QML
+                    Qt.openUrlExternally("https://github.com/LorenDB/Heartless/blob/master/LICENSE")
+                }
+            }
+
             Item { Layout.fillHeight: true }
         }
     }

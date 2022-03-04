@@ -35,6 +35,7 @@ qt_add_qml_module(appHeartless
         qml/edit.svg
         qml/hamburger-menu.svg
         qml/history.svg
+        qml/license.svg
         qml/moon.svg
         qml/plus.svg
         qml/redo.svg
