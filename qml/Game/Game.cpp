@@ -50,6 +50,8 @@ void Game::checkForWinner()
     {
         for (auto player: m_players)
             player->setWinner(false);
+        m_gameOver = false;
+        emit gameOverChanged();
         return;
     }
 
