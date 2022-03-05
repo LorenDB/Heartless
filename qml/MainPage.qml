@@ -179,6 +179,7 @@ Page {
                                 id: userControlRow
 
                                 Layout.preferredWidth: del.width
+                                spacing: 0
 
                                 Label {
                                     id: name
@@ -186,7 +187,7 @@ Page {
                                     Layout.fillWidth: true
                                     // TODO: I set this to + 1 so "North" won't elide at startup. Fix this.
                                     Layout.maximumWidth: implicitWidth + 1
-                                    font.pixelSize: 22
+                                    font.pixelSize: 20
                                     text: game.players[index].name
                                     font.bold: true
                                     elide: Text.ElideRight
