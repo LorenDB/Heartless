@@ -172,19 +172,36 @@ Page {
                         delegate: ColumnLayout {
                             id: del
 
-                            spacing: 10
                             Layout.fillWidth: true
                             Layout.fillHeight: true
 
                             RowLayout {
-                                Layout.fillWidth: true
+                                id: userControlRow
+
+                                Layout.preferredWidth: del.width
 
                                 Label {
                                     id: name
 
+                                    Layout.fillWidth: true
+                                    // TODO: I set this to + 1 so "North" won't elide at startup. Fix this.
+                                    Layout.maximumWidth: implicitWidth + 1
                                     font.pixelSize: 22
                                     text: game.players[index].name
                                     font.bold: true
+                                    elide: Text.ElideRight
+                                }
+
+                                ToolButton {
+                                    icon.source: Qt.resolvedUrl("edit.svg")
+                                    ToolTip.text: qsTr("Edit name")
+                                    ToolTip.visible: hovered
+                                    onClicked: {
+                                        let dialog = changePlayerNameDialog.createObject(mainPageRoot, {
+                                            "index": index
+                                        })
+                                        dialog.open()
+                                    }
                                 }
 
                                 Image {
@@ -198,15 +215,13 @@ Page {
                                 Item { Layout.fillWidth: true }
 
                                 ToolButton {
-                                    icon.source: Qt.resolvedUrl("edit.svg")
-                                    ToolTip.text: qsTr("Edit name")
+                                    icon.source: Qt.resolvedUrl("moon.svg")
+                                    onClicked: game.players[index].shootTheMoon()
+                                    enabled: !game.gameOver
+                                    text: qsTr("Shoot the moon")
+                                    ToolTip.text: text
                                     ToolTip.visible: hovered
-                                    onClicked: {
-                                        let dialog = changePlayerNameDialog.createObject(mainPageRoot, {
-                                            "index": index
-                                        })
-                                        dialog.open()
-                                    }
+                                    display: mainLayout.width / mainLayout.columns < 305 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
                                 }
                             }
 
@@ -215,38 +230,21 @@ Page {
                                 text: game.players[index].score
                             }
 
-                            RowLayout {
-                                Layout.fillWidth: true
+                            TextField {
+                                id: pointInput
 
-                                TextField {
-                                    id: pointInput
+                                placeholderText: qsTr("Add points")
+                                validator: IntValidator { bottom: 0; top: 25 }
+                                onTextChanged: game.players[index].stagingScore = text
+                                enabled: !game.gameOver
+                                inputMethodHints: Qt.ImhDigitsOnly
 
-                                    placeholderText: qsTr("Add points")
-                                    validator: IntValidator { bottom: 0; top: 25 }
-                                    onTextChanged: game.players[index].stagingScore = text
-                                    enabled: !game.gameOver
-                                    inputMethodHints: Qt.ImhDigitsOnly
-
-                                    Connections {
-                                        function onStagingScoreReset() {
-                                            pointInput.clear()
-                                        }
-
-                                        target: game.players[index]
+                                Connections {
+                                    function onStagingScoreReset() {
+                                        pointInput.clear()
                                     }
-                                }
 
-                                Item { Layout.fillWidth: true }
-
-                                ToolButton {
-                                    icon.source: Qt.resolvedUrl("moon.svg")
-                                    onClicked: game.players[index].shootTheMoon()
-                                    enabled: !game.gameOver
-                                    height: name.implicitHeight
-                                    text: qsTr("Shoot the moon")
-                                    ToolTip.text: text
-                                    ToolTip.visible: hovered
-                                    display: mainLayout.width / mainLayout.columns < 305 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+                                    target: game.players[index]
                                 }
                             }
                         }
