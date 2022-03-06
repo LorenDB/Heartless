@@ -4,10 +4,10 @@
 
 Game::Game(QObject *parent)
     : QObject{parent},
-      m_players{new Player{QStringLiteral("North"), this},
-                new Player{QStringLiteral("East"), this},
-                new Player{QStringLiteral("South"), this},
-                new Player{QStringLiteral("West"), this}}
+      m_players{new Player{tr("North"), this},
+                new Player{tr("East"), this},
+                new Player{tr("South"), this},
+                new Player{tr("West"), this}}
 {
     for (auto player : m_players)
     {
