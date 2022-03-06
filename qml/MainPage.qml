@@ -9,6 +9,14 @@ import Game
 Page {
     id: mainPageRoot
 
+    Component.onCompleted: {
+        if (game.savedGameAvailable())
+        {
+            let dialog = restoreSavedGameDlg.createObject(mainPageRoot)
+            dialog.open()
+        }
+    }
+
     Connections {
         function onGameOverChanged()
         {
@@ -36,6 +44,25 @@ Page {
 
         Label {
             text: qsTr("Really reset the game?")
+        }
+    }
+
+    Component {
+        id: restoreSavedGameDlg
+
+        Dialog {
+            title: qsTr("Restore saved game?")
+            anchors.centerIn: mainPageRoot
+            standardButtons: Dialog.Ok | Dialog.Cancel
+            onAccepted: game.restoreSavedGame()
+            onRejected: game.deleteSavedGame()
+            modal: true
+
+            Label {
+                text: qsTr("It looks like you didn't finish your last game. Do you want to pick up where you left off?")
+                wrapMode: Label.WordWrap
+                width: parent.width
+            }
         }
     }
 

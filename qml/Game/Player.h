@@ -58,6 +58,8 @@ private:
     QString m_stagingScore;
     QString m_name;
     bool m_winner{false};
+
+    friend class Game;
 };
 
 #endif // PLAYER_H

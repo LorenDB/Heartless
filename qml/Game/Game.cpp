@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include <QSettings>
+
 Game::Game(QObject *parent)
     : QObject{parent},
       m_players{new Player{QStringLiteral("North"), this},
@@ -27,6 +29,30 @@ Game::Game(QObject *parent)
             emit stagingScoresReadyChanged();
         });
         connect(player, &Player::scoreChanged, this, &Game::checkForWinner);
+        connect(player, &Player::scoreChanged, this, [this, player] {
+            QSettings settings;
+            settings.beginGroup(QStringLiteral("saved_game"));
+            settings.beginGroup(QStringLiteral("player%1").arg(m_players.indexOf(player)));
+            QVariantList variants;
+            for (const auto score : player->m_scores)
+                variants.push_back(score);
+            settings.setValue(QStringLiteral("scores"), variants);
+        });
+        connect(player, &Player::redoScoresChanged, this, [this, player] {
+            QSettings settings;
+            settings.beginGroup(QStringLiteral("saved_game"));
+            settings.beginGroup(QStringLiteral("player%1").arg(m_players.indexOf(player)));
+            QVariantList variants;
+            for (const auto score : player->m_redoScores)
+                variants.push_back(score);
+            settings.setValue(QStringLiteral("redoScores"), variants);
+        });
+        connect(player, &Player::nameChanged, this, [this, player] {
+            QSettings settings;
+            settings.beginGroup(QStringLiteral("saved_game"));
+            settings.beginGroup(QStringLiteral("player%1").arg(m_players.indexOf(player)));
+            settings.setValue(QStringLiteral("name"), player->name());
+        });
     }
 }
 
@@ -38,6 +64,13 @@ void Game::setTargetScore(int target)
 
     m_targetScore = target;
     emit targetScoreChanged();
+}
+
+bool Game::savedGameAvailable() const
+{
+    QSettings settings;
+    settings.beginGroup(QStringLiteral("saved_game"));
+    return settings.allKeys().length() > 0;
 }
 
 void Game::checkForWinner()
@@ -63,6 +96,9 @@ void Game::checkForWinner()
 
     m_gameOver = true;
     emit gameOverChanged();
+
+    // if the game is over, no point in saving it
+    deleteSavedGame();
 }
 
 void Game::reset()
@@ -76,6 +112,7 @@ void Game::reset()
 
     m_gameOver = false;
     emit gameOverChanged();
+    deleteSavedGame();
 }
 
 void Game::undoLastMove()
@@ -93,6 +130,47 @@ void Game::redo()
 {
     for (auto player : m_players)
         player->redo();
+}
+
+void Game::restoreSavedGame()
+{
+    if (!savedGameAvailable())
+        return;
+
+    QSettings settings;
+    settings.beginGroup(QStringLiteral("saved_game"));
+    for (auto player : m_players)
+    {
+        settings.beginGroup(QStringLiteral("player%1").arg(m_players.indexOf(player)));
+
+        disconnect(player, &Player::scoreChanged, this, &Game::checkForWinner);
+        player->m_name = settings.value(QStringLiteral("name"), player->m_name).toString();
+        auto scores = settings.value(QStringLiteral("scores")).toList();
+        if (!scores.isEmpty())
+            for (const auto &score : scores)
+                player->m_scores.push_back(score.toInt());
+        auto redoScores = settings.value(QStringLiteral("redoScores")).toList();
+        if (!redoScores.isEmpty())
+            for (const auto &score : redoScores)
+                player->m_redoScores.push_back(score.toInt());
+
+        emit player->nameChanged();
+        emit player->scoreChanged();
+        emit player->redoScoresChanged();
+
+        connect(player, &Player::scoreChanged, this, &Game::checkForWinner);
+
+        settings.endGroup();
+    }
+
+    checkForWinner();
+}
+
+void Game::deleteSavedGame()
+{
+    QSettings settings;
+    settings.beginGroup(QStringLiteral("saved_game"));
+    settings.remove({});
 }
 
 void Game::commitStagingScores()

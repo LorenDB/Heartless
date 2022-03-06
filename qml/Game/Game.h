@@ -38,6 +38,8 @@ public:
 
     void setTargetScore(int target);
 
+    Q_INVOKABLE bool savedGameAvailable() const;
+
 signals:
     void targetScoreChanged();
     void gameOverChanged();
@@ -48,6 +50,9 @@ public slots:
     void reset();
     void undoLastMove();
     void redo();
+
+    void restoreSavedGame();
+    void deleteSavedGame();
 
     void commitStagingScores();
 
