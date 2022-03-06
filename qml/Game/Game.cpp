@@ -37,7 +37,7 @@ void Game::setTargetScore(int target)
         return;
 
     m_targetScore = target;
-    targetScoreChanged();
+    emit targetScoreChanged();
 }
 
 void Game::checkForWinner()
