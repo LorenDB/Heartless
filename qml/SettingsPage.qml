@@ -30,158 +30,122 @@ Page {
         ListElement { text: "BlueGrey"; value: Material.BlueGrey }
     }
 
-    ColumnLayout {
+    ScrollView {
+        id: sv
+
+        clip: true
         anchors.fill: parent
-        spacing: 0
 
-        ToolBar {
-            id: toolBar
+        Flickable {
+            width: sv.width
+            height: sv.height
+            contentWidth: mainLayoutContainer.width
+            contentHeight: mainLayoutContainer.height
+            anchors.margins: 10
+            leftMargin: 10
+            rightMargin: 10
+            bottomMargin: 10
+            topMargin: 10
 
-            Layout.fillWidth: true
+            Item {
+                id: mainLayoutContainer
+                width: sv.width - 20
+                height: mainLayout.implicitHeight
 
-            RowLayout {
-                anchors.fill: parent
+                GridLayout {
+                    id: mainLayout
 
-                ToolButton {
-                    icon.source: Qt.resolvedUrl("back.svg")
-                    text: qsTr("Back")
-                    ToolTip.text: text
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    onClicked: rootStackView.pop()
-                    display: toolBar.width < 650 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
-                }
+                    width: Math.min(sv.width - 20, 500)
+                    anchors.horizontalCenter: mainLayoutContainer.horizontalCenter
+                    columns: 2
+                    columnSpacing: 10
+                    rowSpacing: 10
 
-                Item { Layout.fillWidth: true }
+                    Label {
+                        text: qsTr("Target score")
+                        Layout.fillWidth: true
+                    }
 
-                ToolButton {
-                    icon.source: Qt.resolvedUrl("hamburger-menu.svg")
-                    ToolTip.text: qsTr("Menu")
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    onClicked: drawer.open()
-                }
-            }
-        }
+                    SpinBox {
+                        Layout.alignment: Qt.AlignRight
+                        from: 13
+                        to: 2147483647 // INT_MAX according to docs.microsoft.com/en-us/cpp/cpp/integer-limits
+                        value: settings.targetScore
+                        onValueChanged: settings.targetScore = value
+                        editable: true
+                    }
 
-        ScrollView {
-            id: sv
+                    Label {
+                        text: qsTr("End-of-game animation")
+                        Layout.fillWidth: true
+                    }
 
-            clip: true
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
-            Flickable {
-                width: sv.width
-                height: sv.height
-                contentWidth: mainLayoutContainer.width
-                contentHeight: mainLayoutContainer.height
-                anchors.margins: 10
-                leftMargin: 10
-                rightMargin: 10
-                bottomMargin: 10
-                topMargin: 10
-
-                Item {
-                    id: mainLayoutContainer
-                    width: sv.width - 20
-                    height: mainLayout.implicitHeight
-
-                    GridLayout {
-                        id: mainLayout
-
-                        width: Math.min(sv.width - 20, 500)
-                        anchors.horizontalCenter: mainLayoutContainer.horizontalCenter
-                        columns: 2
-                        columnSpacing: 10
-                        rowSpacing: 10
-
-                        Label {
-                            text: qsTr("Target score")
-                            Layout.fillWidth: true
-                        }
-
-                        SpinBox {
-                            Layout.alignment: Qt.AlignRight
-                            from: 13
-                            to: 2147483647 // INT_MAX according to docs.microsoft.com/en-us/cpp/cpp/integer-limits
-                            value: settings.targetScore
-                            onValueChanged: settings.targetScore = value
-                            editable: true
-                        }
-
-                        Label {
-                            text: qsTr("End-of-game animation")
-                            Layout.fillWidth: true
-                        }
-
-                        ComboBox {
-                            Layout.alignment: Qt.AlignRight
-                            textRole: "text"
-                            valueRole: "value"
-                            onActivated: settings.animation = currentValue
-                            currentIndex: settings.animation
-                            model: ListModel {
-                                ListElement {
-                                    text: qsTr("Balloon")
-                                    value: AnimType.Balloon
-                                }
-                                ListElement {
-                                    text: qsTr("Fountain")
-                                    value: AnimType.Fountain
-                                }
-                                ListElement {
-                                    text: qsTr("None")
-                                    value: AnimType.None
-                                }
+                    ComboBox {
+                        Layout.alignment: Qt.AlignRight
+                        textRole: "text"
+                        valueRole: "value"
+                        onActivated: settings.animation = currentValue
+                        currentIndex: settings.animation
+                        model: ListModel {
+                            ListElement {
+                                text: qsTr("Balloon")
+                                value: AnimType.Balloon
+                            }
+                            ListElement {
+                                text: qsTr("Fountain")
+                                value: AnimType.Fountain
+                            }
+                            ListElement {
+                                text: qsTr("None")
+                                value: AnimType.None
                             }
                         }
+                    }
 
-                        Label {
-                            text: "App theme"
-                            Layout.fillWidth: true
-                        }
+                    Label {
+                        text: "App theme"
+                        Layout.fillWidth: true
+                    }
 
-                        ComboBox {
-                            Layout.alignment: Qt.AlignRight
-                            textRole: "text"
-                            valueRole: "value"
-                            currentIndex: settings.theme
-                            onActivated: settings.theme = currentValue
-                            model: ListModel {
-                                ListElement { text: qsTr("Light"); value: Material.Light }
-                                ListElement { text: qsTr("Dark"); value: Material.Dark }
-                                ListElement { text: qsTr("System"); value: Material.System }
-                            }
+                    ComboBox {
+                        Layout.alignment: Qt.AlignRight
+                        textRole: "text"
+                        valueRole: "value"
+                        currentIndex: settings.theme
+                        onActivated: settings.theme = currentValue
+                        model: ListModel {
+                            ListElement { text: qsTr("Light"); value: Material.Light }
+                            ListElement { text: qsTr("Dark"); value: Material.Dark }
+                            ListElement { text: qsTr("System"); value: Material.System }
                         }
+                    }
 
-                        Label {
-                            text: "App primary color"
-                            Layout.fillWidth: true
-                        }
+                    Label {
+                        text: "App primary color"
+                        Layout.fillWidth: true
+                    }
 
-                        ComboBox {
-                            Layout.alignment: Qt.AlignRight
-                            textRole: "text"
-                            valueRole: "value"
-                            currentIndex: settings.primary
-                            onActivated: settings.primary = currentValue
-                            model: colorModel
-                        }
+                    ComboBox {
+                        Layout.alignment: Qt.AlignRight
+                        textRole: "text"
+                        valueRole: "value"
+                        currentIndex: settings.primary
+                        onActivated: settings.primary = currentValue
+                        model: colorModel
+                    }
 
-                        Label {
-                            text: "App accent color"
-                            Layout.fillWidth: true
-                        }
+                    Label {
+                        text: "App accent color"
+                        Layout.fillWidth: true
+                    }
 
-                        ComboBox {
-                            Layout.alignment: Qt.AlignRight
-                            textRole: "text"
-                            valueRole: "value"
-                            currentIndex: settings.accent
-                            onActivated: settings.accent = currentValue
-                            model: colorModel
-                        }
+                    ComboBox {
+                        Layout.alignment: Qt.AlignRight
+                        textRole: "text"
+                        valueRole: "value"
+                        currentIndex: settings.accent
+                        onActivated: settings.accent = currentValue
+                        model: colorModel
                     }
                 }
             }

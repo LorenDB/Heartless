@@ -5,116 +5,80 @@ import QtQuick.Layouts
 Page {
     id: historyPageRoot
 
-    ColumnLayout {
+    ScrollView {
+        id: sv
+
+        clip: true
         anchors.fill: parent
-        spacing: 0
 
-        ToolBar {
-            id: toolBar
+        Flickable {
+            width: sv.width
+            height: sv.height
+            contentWidth: mainLayoutContainer.width
+            contentHeight: mainLayoutContainer.height
+            anchors.margins: 10
+            leftMargin: 10
+            rightMargin: 10
+            bottomMargin: 10
+            topMargin: 10
 
-            Layout.fillWidth: true
+            Item {
+                id: mainLayoutContainer
+                width: sv.width - 20
+                height: mainLayout.implicitHeight
 
-            RowLayout {
-                anchors.fill: parent
+                GridLayout {
+                    id: mainLayout
 
-                ToolButton {
-                    icon.source: Qt.resolvedUrl("back.svg")
-                    text: qsTr("Back")
-                    ToolTip.text: text
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    onClicked: rootStackView.pop()
-                    display: toolBar.width < 500 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
-                }
+                    width: Math.max(sv.width, 100) - 20
+                    columnSpacing: 10
+                    rowSpacing: 10
+                    columns: Math.min(Math.max(width / 170, 1), 4)
 
-                Item { Layout.fillWidth: true }
+                    Repeater {
+                        model: 4
+                        delegate: ColumnLayout {
+                            id: del
 
-                ToolButton {
-                    icon.source: Qt.resolvedUrl("hamburger-menu.svg")
-                    ToolTip.text: qsTr("Menu")
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    onClicked: drawer.open()
-                }
-            }
-        }
+                            // for the nested Repeater
+                            property int playerIndex: index
+                            spacing: 10
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
 
-        ScrollView {
-            id: sv
-
-            clip: true
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
-            Flickable {
-                width: sv.width
-                height: sv.height
-                contentWidth: mainLayoutContainer.width
-                contentHeight: mainLayoutContainer.height
-                anchors.margins: 10
-                leftMargin: 10
-                rightMargin: 10
-                bottomMargin: 10
-                topMargin: 10
-
-                Item {
-                    id: mainLayoutContainer
-                    width: sv.width - 20
-                    height: mainLayout.implicitHeight
-
-                    GridLayout {
-                        id: mainLayout
-
-                        width: Math.max(sv.width, 100) - 20
-                        columnSpacing: 10
-                        rowSpacing: 10
-                        columns: Math.min(Math.max(width / 170, 1), 4)
-
-                        Repeater {
-                            model: 4
-                            delegate: ColumnLayout {
-                                id: del
-
-                                // for the nested Repeater
-                                property int playerIndex: index
+                            RowLayout {
                                 spacing: 10
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-
-                                RowLayout {
-                                    spacing: 10
-                                    Layout.preferredWidth: del.width
-
-                                    Label {
-                                        id: name
-
-                                        font.pixelSize: 22
-                                        text: game.players[index].name
-                                        font.bold: true
-                                    }
-
-                                    Image {
-                                        Layout.preferredHeight: name.height
-                                        Layout.preferredWidth: height
-                                        fillMode: Image.PreserveAspectFit
-                                        source: Qt.resolvedUrl("logo.svg")
-                                        visible: game.players[index].winner
-                                    }
-
-                                    Item { Layout.fillWidth: true }
-                                }
-
-                                Repeater {
-                                    model: game.players[del.playerIndex].scores
-                                    delegate: Label {
-                                        text: qsTr("Round ") + (index + 1) + ": " + game.players[del.playerIndex].scores[index]
-                                    }
-                                }
+                                Layout.preferredWidth: del.width
 
                                 Label {
-                                    font.pixelSize: 20
-                                    text: qsTr("Total: ") + game.players[index].score
+                                    id: name
+
+                                    font.pixelSize: 22
+                                    text: game.players[index].name
+                                    font.bold: true
                                 }
+
+                                Image {
+                                    Layout.preferredHeight: name.height
+                                    Layout.preferredWidth: height
+                                    fillMode: Image.PreserveAspectFit
+                                    source: Qt.resolvedUrl("logo.svg")
+                                    visible: game.players[index].winner
+                                }
+
+                                Item { Layout.fillWidth: true }
+                            }
+
+                            Repeater {
+                                model: game.players[del.playerIndex].scores
+                                delegate: Label {
+                                    text: qsTr("Round ") + (index + 1) + ": " + game.players[del.playerIndex].scores[index]
+                                }
+                            }
+
+                            Label {
+                                font.pixelSize: 20
+                                text: qsTr("Total: ") + game.players[index].score
                             }
                         }
                     }

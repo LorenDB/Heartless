@@ -9,6 +9,61 @@ import Game
 Page {
     id: mainPageRoot
 
+    property list<Component> toolbarButtons: [
+        Component {
+            ToolButton {
+                icon.source: Qt.resolvedUrl("plus.svg")
+                enabled: game.stagingScoresReady
+                onClicked: game.commitStagingScores()
+                ToolTip.text: qsTr("Add scores")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+            }
+        },
+        Component {
+            ToolButton {
+                icon.source: Qt.resolvedUrl("history.svg")
+                ToolTip.text: qsTr("Score history")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+                onClicked: rootStackView.push(historyPageComponent)
+            }
+        },
+        Component {
+            ToolButton {
+                icon.source: Qt.resolvedUrl("undo.svg")
+                enabled: game.players[0].scores.length > 0
+                onClicked: game.undoLastMove()
+                ToolTip.text: qsTr("Undo")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+                display: toolBar.buttonDisplay
+            }
+        },
+        Component {
+            ToolButton {
+                icon.source: Qt.resolvedUrl("redo.svg")
+                enabled: game.players[0].redoScores.length > 0
+                onClicked: game.redo()
+                ToolTip.text: qsTr("Redo")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+            }
+        },
+        Component {
+            ToolButton {
+                icon.source: Qt.resolvedUrl("reset.svg")
+                onClicked: {
+                    let dialog = confirmResetGame.createObject(mainPageRoot)
+                    dialog.open()
+                }
+                ToolTip.text: qsTr("Reset game")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+            }
+        }
+    ]
+
     Component.onCompleted: {
         if (game.savedGameAvailable())
         {
@@ -96,197 +151,113 @@ Page {
         }
     }
 
-    ColumnLayout {
+    ScrollView {
+        id: sv
+
+        clip: true
         anchors.fill: parent
-        spacing: 0
 
-        ToolBar {
-            id: toolBar
+        Flickable {
+            width: parent.width
+            height: parent.height
+            contentWidth: mainLayout.width
+            contentHeight: mainLayout.height
+            anchors.margins: 10
+            leftMargin: 10
+            rightMargin: 10
+            bottomMargin: 10
+            topMargin: 10
 
-            property int buttonDisplay: toolBar.width < 650 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+            GridLayout {
+                id: mainLayout
 
-            Layout.fillWidth: true
+                width: Math.max(sv.width, 100) - 20
+                columnSpacing: 10
+                rowSpacing: 10
+                columns: Math.min(Math.max(width / 170, 1), 4)
 
-            RowLayout {
-                anchors.fill: parent
+                Repeater {
+                    model: 4
 
-                ToolButton {
-                    text: qsTr("Add scores")
-                    icon.source: Qt.resolvedUrl("plus.svg")
-                    enabled: game.stagingScoresReady
-                    onClicked: game.commitStagingScores()
-                    ToolTip.text: text
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    display: toolBar.buttonDisplay
-                }
+                    delegate: ColumnLayout {
+                        id: del
 
-                ToolButton {
-                    text: qsTr("Score history")
-                    icon.source: Qt.resolvedUrl("history.svg")
-                    ToolTip.text: text
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    display: toolBar.buttonDisplay
-                    onClicked: rootStackView.push(historyPageComponent)
-                }
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
 
-                ToolButton {
-                    text: qsTr("Undo")
-                    icon.source: Qt.resolvedUrl("undo.svg")
-                    enabled: game.players[0].scores.length > 0
-                    onClicked: game.undoLastMove()
-                    ToolTip.text: text
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    display: toolBar.buttonDisplay
-                }
+                        RowLayout {
+                            id: userControlRow
 
-                ToolButton {
-                    text: qsTr("Redo")
-                    icon.source: Qt.resolvedUrl("redo.svg")
-                    enabled: game.players[0].redoScores.length > 0
-                    onClicked: game.redo()
-                    ToolTip.text: text
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    display: toolBar.buttonDisplay
-                }
-
-                ToolButton {
-                    text: qsTr("Reset game")
-                    icon.source: Qt.resolvedUrl("reset.svg")
-                    onClicked: {
-                        let dialog = confirmResetGame.createObject(mainPageRoot)
-                        dialog.open()
-                    }
-                    ToolTip.text: text
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    display: toolBar.buttonDisplay
-                }
-
-                Item { Layout.fillWidth: true }
-
-                ToolButton {
-                    icon.source: Qt.resolvedUrl("hamburger-menu.svg")
-                    ToolTip.text: qsTr("Menu")
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    onClicked: drawer.open()
-                }
-            }
-        }
-
-        ScrollView {
-            id: sv
-
-            clip: true
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
-            Flickable {
-                width: parent.width
-                height: parent.height
-                contentWidth: mainLayout.width
-                contentHeight: mainLayout.height
-                anchors.margins: 10
-                leftMargin: 10
-                rightMargin: 10
-                bottomMargin: 10
-                topMargin: 10
-
-                GridLayout {
-                    id: mainLayout
-
-                    width: Math.max(sv.width, 100) - 20
-                    columnSpacing: 10
-                    rowSpacing: 10
-                    columns: Math.min(Math.max(width / 170, 1), 4)
-
-                    Repeater {
-                        model: 4
-
-                        delegate: ColumnLayout {
-                            id: del
-
-                            Layout.fillWidth: true
-                            Layout.fillHeight: true
-
-                            RowLayout {
-                                id: userControlRow
-
-                                Layout.preferredWidth: del.width
-                                spacing: 0
-
-                                Label {
-                                    id: name
-
-                                    Layout.fillWidth: true
-                                    // TODO: I set this to + 1 so "North" won't elide at startup. Fix this.
-                                    Layout.maximumWidth: implicitWidth + 1
-                                    font.pixelSize: 20
-                                    text: game.players[index].name
-                                    font.bold: true
-                                    elide: Text.ElideRight
-                                }
-
-                                ToolButton {
-                                    icon.source: Qt.resolvedUrl("edit.svg")
-                                    ToolTip.text: qsTr("Edit name")
-                                    ToolTip.visible: hovered
-                                    ToolTip.delay: 1000
-                                    onClicked: {
-                                        let dialog = changePlayerNameDialog.createObject(mainPageRoot, {
-                                            "index": index
-                                        })
-                                        dialog.open()
-                                    }
-                                }
-
-                                Image {
-                                    Layout.preferredHeight: name.height
-                                    Layout.preferredWidth: height
-                                    fillMode: Image.PreserveAspectFit
-                                    source: Qt.resolvedUrl("logo.svg")
-                                    visible: game.players[index].winner
-                                }
-
-                                Item { Layout.fillWidth: true }
-
-                                ToolButton {
-                                    icon.source: Qt.resolvedUrl("moon.svg")
-                                    onClicked: game.players[index].shootTheMoon()
-                                    enabled: !game.gameOver
-                                    text: qsTr("Shoot the moon")
-                                    ToolTip.text: text
-                                    ToolTip.visible: hovered
-                                    ToolTip.delay: 1000
-                                    display: mainLayout.width / mainLayout.columns < 305 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
-                                }
-                            }
+                            Layout.preferredWidth: del.width
+                            spacing: 0
 
                             Label {
+                                id: name
+
+                                Layout.fillWidth: true
+                                // TODO: I set this to + 1 so "North" won't elide at startup. Fix this.
+                                Layout.maximumWidth: implicitWidth + 1
                                 font.pixelSize: 20
-                                text: game.players[index].score
+                                text: game.players[index].name
+                                font.bold: true
+                                elide: Text.ElideRight
                             }
 
-                            TextField {
-                                id: pointInput
-
-                                placeholderText: qsTr("Add points")
-                                validator: IntValidator { bottom: 0; top: 25 }
-                                onTextChanged: game.players[index].stagingScore = text
-                                enabled: !game.gameOver
-                                inputMethodHints: Qt.ImhDigitsOnly
-
-                                Connections {
-                                    function onStagingScoreReset() {
-                                        pointInput.clear()
-                                    }
-
-                                    target: game.players[index]
+                            ToolButton {
+                                icon.source: Qt.resolvedUrl("edit.svg")
+                                ToolTip.text: qsTr("Edit name")
+                                ToolTip.visible: hovered
+                                ToolTip.delay: 1000
+                                onClicked: {
+                                    let dialog = changePlayerNameDialog.createObject(mainPageRoot, {
+                                                                                         "index": index
+                                                                                     })
+                                    dialog.open()
                                 }
+                            }
+
+                            Image {
+                                Layout.preferredHeight: name.height
+                                Layout.preferredWidth: height
+                                fillMode: Image.PreserveAspectFit
+                                source: Qt.resolvedUrl("logo.svg")
+                                visible: game.players[index].winner
+                            }
+
+                            Item { Layout.fillWidth: true }
+
+                            ToolButton {
+                                icon.source: Qt.resolvedUrl("moon.svg")
+                                onClicked: game.players[index].shootTheMoon()
+                                enabled: !game.gameOver
+                                text: qsTr("Shoot the moon")
+                                ToolTip.text: text
+                                ToolTip.visible: hovered
+                                ToolTip.delay: 1000
+                                display: mainLayout.width / mainLayout.columns < 305 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+                            }
+                        }
+
+                        Label {
+                            font.pixelSize: 20
+                            text: game.players[index].score
+                        }
+
+                        TextField {
+                            id: pointInput
+
+                            placeholderText: qsTr("Add points")
+                            validator: IntValidator { bottom: 0; top: 25 }
+                            onTextChanged: game.players[index].stagingScore = text
+                            enabled: !game.gameOver
+                            inputMethodHints: Qt.ImhDigitsOnly
+
+                            Connections {
+                                function onStagingScoreReset() {
+                                    pointInput.clear()
+                                }
+
+                                target: game.players[index]
                             }
                         }
                     }

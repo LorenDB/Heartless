@@ -119,10 +119,51 @@ Window {
         AboutPage {}
     }
 
+    ToolBar {
+        id: toolBar
+
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        RowLayout {
+            anchors.fill: parent
+
+            ToolButton {
+                icon.source: Qt.resolvedUrl("back.svg")
+                text: qsTr("Back")
+                visible: rootStackView.depth > 1
+                ToolTip.text: text
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+                onClicked: rootStackView.pop()
+                display: toolBar.width < 650 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
+            }
+
+            Repeater {
+                model: rootStackView.currentItem.toolbarButtons ?? 0
+                delegate: Loader { sourceComponent: rootStackView.currentItem.toolbarButtons[index] }
+            }
+
+            Item { Layout.fillWidth: true }
+
+            ToolButton {
+                icon.source: Qt.resolvedUrl("hamburger-menu.svg")
+                ToolTip.text: qsTr("Menu")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+                onClicked: drawer.open()
+            }
+        }
+    }
+
     StackView {
         id: rootStackView
 
-        anchors.fill: parent
+        anchors.top: toolBar.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
         initialItem: mainPageComponent
     }
 }

@@ -18,82 +18,46 @@ Page {
         ListElement { fontPixelSize: 16; data: qsTr("Heartless includes several end-of-game animations for you to choose from!") }
     }
 
-    ColumnLayout {
+    ScrollView {
+        id: sv
+
+        clip: true
         anchors.fill: parent
-        spacing: 0
 
-        ToolBar {
-            id: toolBar
+        Flickable {
+            width: sv.width
+            height: sv.height
+            contentWidth: mainLayoutContainer.width
+            contentHeight: mainLayoutContainer.height
+            anchors.margins: 10
+            leftMargin: 10
+            rightMargin: 10
+            bottomMargin: 10
+            topMargin: 10
 
-            Layout.fillWidth: true
+            Item {
+                id: mainLayoutContainer
+                width: sv.width - 20
+                height: mainLayout.implicitHeight
 
-            RowLayout {
-                anchors.fill: parent
+                ColumnLayout {
+                    id: mainLayout
 
-                ToolButton {
-                    icon.source: Qt.resolvedUrl("back.svg")
-                    text: qsTr("Back")
-                    ToolTip.text: text
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    onClicked: rootStackView.pop()
-                    display: toolBar.width < 650 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
-                }
+                    width: Math.min(sv.width - 20, 500)
+                    anchors.horizontalCenter: mainLayoutContainer.horizontalCenter
+                    spacing: 10
 
-                Item { Layout.fillWidth: true }
+                    Repeater {
+                        model: aboutInfoModel
+                        delegate: Label {
+                            required property string data
+                            required property int fontPixelSize
 
-                ToolButton {
-                    icon.source: Qt.resolvedUrl("hamburger-menu.svg")
-                    ToolTip.text: qsTr("Menu")
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 1000
-                    onClicked: drawer.open()
-                }
-            }
-        }
-
-        ScrollView {
-            id: sv
-
-            clip: true
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
-            Flickable {
-                width: sv.width
-                height: sv.height
-                contentWidth: mainLayoutContainer.width
-                contentHeight: mainLayoutContainer.height
-                anchors.margins: 10
-                leftMargin: 10
-                rightMargin: 10
-                bottomMargin: 10
-                topMargin: 10
-
-                Item {
-                    id: mainLayoutContainer
-                    width: sv.width - 20
-                    height: mainLayout.implicitHeight
-
-                    ColumnLayout {
-                        id: mainLayout
-
-                        width: Math.min(sv.width - 20, 500)
-                        anchors.horizontalCenter: mainLayoutContainer.horizontalCenter
-                        spacing: 10
-
-                        Repeater {
-                            model: aboutInfoModel
-                            delegate: Label {
-                                required property string data
-                                required property int fontPixelSize
-
-                                Layout.fillWidth: true
-                                text: data
-                                wrapMode: Label.WordWrap
-                                font.pixelSize: fontPixelSize
-                                font.bold: fontPixelSize > 20
-                            }
+                            Layout.fillWidth: true
+                            text: data
+                            wrapMode: Label.WordWrap
+                            font.pixelSize: fontPixelSize
+                            font.bold: fontPixelSize > 20
                         }
                     }
                 }
