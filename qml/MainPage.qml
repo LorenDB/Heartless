@@ -33,17 +33,19 @@ Page {
         HistoryPage {}
     }
 
-    Dialog {
+    Component {
         id: confirmResetGame
 
-        title: qsTr("Reset game?")
-        anchors.centerIn: parent
-        standardButtons: Dialog.Ok | Dialog.Cancel
-        onAccepted: game.reset()
-        modal: true
+        Dialog {
+            title: qsTr("Reset game?")
+            anchors.centerIn: parent
+            standardButtons: Dialog.Ok | Dialog.Cancel
+            onAccepted: game.reset()
+            modal: true
 
-        Label {
-            text: qsTr("Really reset the game?")
+            Label {
+                text: qsTr("Really reset the game?")
+            }
         }
     }
 
@@ -150,7 +152,10 @@ Page {
                 ToolButton {
                     text: qsTr("Reset game")
                     icon.source: Qt.resolvedUrl("reset.svg")
-                    onClicked: confirmResetGame.open()
+                    onClicked: {
+                        let dialog = confirmResetGame.createObject(mainPageRoot)
+                        dialog.open()
+                    }
                     ToolTip.text: text
                     ToolTip.visible: hovered
                     display: toolBar.buttonDisplay
