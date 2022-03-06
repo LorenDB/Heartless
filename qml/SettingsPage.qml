@@ -47,6 +47,7 @@ Page {
                     text: qsTr("Back")
                     ToolTip.text: text
                     ToolTip.visible: hovered
+                    ToolTip.delay: 1000
                     onClicked: rootStackView.pop()
                     display: toolBar.width < 650 ? ToolButton.IconOnly : ToolButton.TextBesideIcon
                 }
@@ -57,6 +58,7 @@ Page {
                     icon.source: Qt.resolvedUrl("hamburger-menu.svg")
                     ToolTip.text: qsTr("Menu")
                     ToolTip.visible: hovered
+                    ToolTip.delay: 1000
                     onClicked: drawer.open()
                 }
             }
