@@ -37,7 +37,6 @@ Page {
                 ToolTip.text: qsTr("Undo")
                 ToolTip.visible: hovered
                 ToolTip.delay: 1000
-                display: toolBar.buttonDisplay
             }
         },
         Component {

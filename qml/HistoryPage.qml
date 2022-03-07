@@ -42,6 +42,7 @@ Page {
 
                             // for the nested Repeater
                             property int playerIndex: index
+
                             spacing: 10
                             Layout.fillWidth: true
                             Layout.fillHeight: true
