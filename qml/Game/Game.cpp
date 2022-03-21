@@ -179,5 +179,6 @@ void Game::commitStagingScores()
     {
         player->addToScore(player->stagingScore());
         player->resetStagingScore();
+        player->clearRedoScores();
     }
 }

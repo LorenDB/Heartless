@@ -45,6 +45,12 @@ void Player::resetStagingScore()
     emit stagingScoreReset();
 }
 
+void Player::clearRedoScores()
+{
+    m_redoScores.clear();
+    emit redoScoresChanged();
+}
+
 void Player::setName(const QString &name)
 {
     if (name == m_name)

@@ -33,6 +33,7 @@ public:
 
     void resetScore();
     void resetStagingScore();
+    void clearRedoScores();
     void setName(const QString &name);
     void setWinner(bool b);
 
