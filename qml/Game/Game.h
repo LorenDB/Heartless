@@ -24,6 +24,7 @@ class Game : public QObject
 
 public:
     explicit Game(QObject *parent = nullptr);
+    ~Game();
 
     Player *player1() { return m_players[0]; }
     Player *player2() { return m_players[1]; }

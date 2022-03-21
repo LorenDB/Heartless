@@ -56,6 +56,16 @@ Game::Game(QObject *parent)
     }
 }
 
+Game::~Game()
+{
+    bool shouldDeleteSave{true};
+    for (auto player : m_players)
+        shouldDeleteSave &= ((player->scores().length() == 0) | m_gameOver);
+
+    if (shouldDeleteSave)
+        deleteSavedGame();
+}
+
 void Game::setTargetScore(int target)
 {
     // 13 is the lowest possible high score for a game of one round, so don't use anything smaller than that
