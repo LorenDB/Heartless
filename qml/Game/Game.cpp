@@ -18,6 +18,7 @@ Game::Game(QObject *parent)
                     player->addToScore(0);
                 else
                     otherPlayer->addToScore(26);
+                otherPlayer->clearRedoScores();
             }
         });
         connect(player, &Player::stagingScoreChanged, this, [this] {
