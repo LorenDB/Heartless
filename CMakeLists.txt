@@ -5,15 +5,16 @@ project(Heartless VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.2 COMPONENTS Quick REQUIRED)
+find_package(Qt6 6.4 COMPONENTS Core Quick LinguistTools REQUIRED)
 
-set(LANG_FILES
+set(TRANSLATIONS
     Heartless_en_US.ts
 )
 
 qt_add_executable(appHeartless
     src/main.cpp
 
+    ${TRANSLATIONS}
     ${LANG_FILES}
 )
 
@@ -51,6 +52,7 @@ qt_add_qml_module(appHeartless
         qml/settings.svg
         qml/undo.svg
 )
+qt_add_translations(appHeartless TS_FILES ${TRANSLATIONS} SOURCES ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/qml)
 
 add_subdirectory(qml)
 

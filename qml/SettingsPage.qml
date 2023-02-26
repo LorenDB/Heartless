@@ -9,25 +9,25 @@ Page {
     ListModel {
         id: colorModel
 
-        ListElement { text: "Red"; value: Material.Red }
-        ListElement { text: "Pink"; value: Material.Pink }
-        ListElement { text: "Purple"; value: Material.Purple }
-        ListElement { text: "DeepPurple"; value: Material.DeepPurple }
-        ListElement { text: "Indigo"; value: Material.Indigo }
-        ListElement { text: "Blue"; value: Material.Blue }
-        ListElement { text: "LightBlue"; value: Material.LightBlue }
-        ListElement { text: "Cyan"; value: Material.Cyan }
-        ListElement { text: "Teal"; value: Material.Teal }
-        ListElement { text: "Green"; value: Material.Green }
-        ListElement { text: "LightGreen"; value: Material.LightGreen }
-        ListElement { text: "Lime"; value: Material.Lime }
-        ListElement { text: "Yellow"; value: Material.Yellow }
-        ListElement { text: "Amber"; value: Material.Amber }
-        ListElement { text: "Orange"; value: Material.Orange }
-        ListElement { text: "DeepOrange"; value: Material.DeepOrange }
-        ListElement { text: "Brown"; value: Material.Brown }
-        ListElement { text: "Grey"; value: Material.Grey }
-        ListElement { text: "BlueGrey"; value: Material.BlueGrey }
+        ListElement { text: qsTr("Red"); value: Material.Red }
+        ListElement { text: qsTr("Pink"); value: Material.Pink }
+        ListElement { text: qsTr("Purple"); value: Material.Purple }
+        ListElement { text: qsTr("Deep purple"); value: Material.DeepPurple }
+        ListElement { text: qsTr("Indigo"); value: Material.Indigo }
+        ListElement { text: qsTr("Blue"); value: Material.Blue }
+        ListElement { text: qsTr("Light blue"); value: Material.LightBlue }
+        ListElement { text: qsTr("Cyan"); value: Material.Cyan }
+        ListElement { text: qsTr("Teal"); value: Material.Teal }
+        ListElement { text: qsTr("Green"); value: Material.Green }
+        ListElement { text: qsTr("Light green"); value: Material.LightGreen }
+        ListElement { text: qsTr("Lime"); value: Material.Lime }
+        ListElement { text: qsTr("Yellow"); value: Material.Yellow }
+        ListElement { text: qsTr("Amber"); value: Material.Amber }
+        ListElement { text: qsTr("Orange"); value: Material.Orange }
+        ListElement { text: qsTr("Deep orange"); value: Material.DeepOrange }
+        ListElement { text: qsTr("Brown"); value: Material.Brown }
+        ListElement { text: qsTr("Grey"); value: Material.Grey }
+        ListElement { text: qsTr("Blue-grey"); value: Material.BlueGrey }
     }
 
     ScrollView {

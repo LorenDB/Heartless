@@ -16,14 +16,8 @@ int main(int argc, char *argv[])
     QGuiApplication app{argc, argv};
 
     QTranslator translator;
-    for (const QString &locale : QLocale::system().uiLanguages())
-    {
-        if (translator.load(":/i18n/Heartless_" + QLocale{locale}.name()))
-        {
-            app.installTranslator(&translator);
-            break;
-        }
-    }
+    if (translator.load(QLocale{}, QStringLiteral("Heartless"), QStringLiteral("_"), QStringLiteral(":/i18n")))
+        QGuiApplication::installTranslator(&translator);
 
     QQmlApplicationEngine engine;
     const QUrl url{u"qrc:/Heartless/qml/main.qml"_qs};
