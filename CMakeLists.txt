@@ -5,7 +5,7 @@ project(Heartless VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.4 COMPONENTS Core Quick LinguistTools REQUIRED)
+find_package(Qt6 6.4 COMPONENTS Core Quick Svg LinguistTools REQUIRED)
 
 set(TRANSLATIONS
     Heartless_en_US.ts
@@ -68,5 +68,6 @@ target_compile_definitions(appHeartless
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(appHeartless PRIVATE
     Qt6::Quick
+    Qt6::Svg
     Gameplugin
 )
