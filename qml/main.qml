@@ -27,6 +27,7 @@ Window {
             else
                 event.accepted = false
         })
+        // TODO: do same with mouse back button
     }
 
     Settings {
