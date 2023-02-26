@@ -8,16 +8,21 @@ If you want to add a new icon but can't find the right one, try looking at [flue
 
 | **Filename** | **Icon name** |
 |-|-|
+| across.svg | Arrow Swap |
 | back.svg | Arrow Left |
 | code.svg | Code |
+| dismiss.svg | Dismiss |
 | edit.svg | Edit |
 | hamburger-menu.svg | Line Horizontal 3 |
 | history.svg | History |
 | info.svg | Info |
+| keep.svg | Arrow Down |
+| left.svg | Arrow Left |
 | license.svg | Gavel |
 | moon.svg | Sleep (note: was modified to be just a moon instead of including a musical note) |
 | plus.svg | Add |
 | redo.svg | Arrow Redo |
 | reset.svg | Arrow Reset |
+| right.svg | Arrow Right |
 | settings.svg | Settings |
 | undo.svg | Arrow Undo |

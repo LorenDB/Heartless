@@ -265,6 +265,127 @@ Page {
         }
     }
 
+    Pane {
+        id: passDirPopup
+
+        Material.elevation: 6
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.margins: 15
+        contentWidth: passDirLayout.implicitWidth
+        contentHeight: passDirLayout.implicitHeight
+        visible: false
+        opacity: 0 // Don't show at startup to avoid fade-out if hidden.
+        state: "hidden"
+        states: [
+            State {
+                name: "shown"
+                when: settings.showPassDirectionPopup
+                PropertyChanges {
+                    target: passDirPopup
+                    opacity: 1
+                    visible: true
+                }
+            },
+            State {
+                name: "hidden"
+                when: !settings.showPassDirectionPopup
+                PropertyChanges {
+                    target: passDirPopup
+                    opacity: 0
+                    visible: false
+                }
+            }
+        ]
+        transitions: [
+            Transition {
+                from: "shown"
+                to: "hidden"
+                reversible: true
+
+                SequentialAnimation {
+                    NumberAnimation {
+                        target: passDirPopup
+                        property: "opacity"
+                        duration: 200
+                    }
+                    PropertyAction {
+                        target: passDirPopup
+                        property: "visible"
+                    }
+                }
+            }
+        ]
+
+        // hacky background that includes the default shadow for Material.elevation
+        Rectangle {
+            anchors.centerIn: parent
+            width: passDirPopup.width
+            height: passDirPopup.height
+            color: Material.dialogColor
+        }
+
+        RowLayout {
+            id: passDirLayout
+
+            spacing: 10
+            anchors.fill: parent
+
+            // TODO: this should be a generic Icon if/when that becomes a thing
+            ToolButton {
+                id: passIcon
+
+                indicator: Item {}
+                background: Rectangle { color: Material.dialogColor }
+                display: AbstractButton.IconOnly
+                icon.source: {
+                    if (game.gameOver)
+                        return Qt.resolvedUrl("")
+
+                    switch (game.currentRound % 4) {
+                    case 0:
+                        return Qt.resolvedUrl("left.svg")
+                    case 1:
+                        return Qt.resolvedUrl("right.svg")
+                    case 2:
+                        return Qt.resolvedUrl("across.svg")
+                    case 3:
+                        return Qt.resolvedUrl("keep.svg")
+                    }
+                }
+            }
+
+            Label {
+                text: {
+                    if (game.gameOver)
+                        return qsTr("Game over")
+
+                    switch (game.currentRound % 4) {
+                    case 0:
+                        return qsTr("Pass left")
+                    case 1:
+                        return qsTr("Pass right")
+                    case 2:
+                        return qsTr("Pass across")
+                    case 3:
+                        return qsTr("Keep")
+                    }
+                }
+
+                font.bold: true
+                Layout.fillWidth: true
+            }
+
+            ToolButton {
+                id: closePopupBtn
+
+                icon.source: Qt.resolvedUrl("dismiss.svg")
+                onClicked: settings.showPassDirectionPopup = false
+            }
+        }
+    }
+
     ParticleSystem { id: sys }
 
     MultiStyleEmitter {

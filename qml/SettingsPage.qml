@@ -76,6 +76,17 @@ Page {
                     }
 
                     Label {
+                        text: qsTr("Show pass direction for each round")
+                        Layout.fillWidth: true
+                    }
+
+                    Switch {
+                        Layout.alignment: Qt.AlignRight
+                        checked: settings.showPassDirectionPopup
+                        onCheckedChanged: settings.showPassDirectionPopup = checked
+                    }
+
+                    Label {
                         text: qsTr("End-of-game animation")
                         Layout.fillWidth: true
                     }

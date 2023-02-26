@@ -19,6 +19,7 @@ class Game : public QObject
     Q_PROPERTY(Player * player3 READ player3 CONSTANT)
     Q_PROPERTY(Player * player4 READ player4 CONSTANT)
     Q_PROPERTY(int targetScore READ targetScore WRITE setTargetScore NOTIFY targetScoreChanged)
+    Q_PROPERTY(int currentRound READ currentRound NOTIFY currentRoundChanged)
     Q_PROPERTY(bool gameOver READ gameOver NOTIFY gameOverChanged)
     Q_PROPERTY(bool stagingScoresReady READ stagingScoresReady NOTIFY stagingScoresReadyChanged)
 
@@ -34,6 +35,7 @@ public:
     QVector<Player *> players() { return m_players; }
 
     int targetScore() const { return m_targetScore; }
+    int currentRound() const { return m_players[0]->scores().size(); }
     bool gameOver() const { return m_gameOver; }
     bool stagingScoresReady() const { return m_stagingScoresReady; }
 
@@ -43,6 +45,7 @@ public:
 
 signals:
     void targetScoreChanged();
+    void currentRoundChanged();
     void gameOverChanged();
     void stagingScoresReadyChanged();
 

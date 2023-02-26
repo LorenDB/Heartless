@@ -32,17 +32,22 @@ qt_add_qml_module(appHeartless
     RESOURCES
         qml/logo.svg
 
+        qml/across.svg
         qml/back.svg
         qml/code.svg
+        qml/dismiss.svg
         qml/edit.svg
         qml/hamburger-menu.svg
         qml/history.svg
         qml/info.svg
+        qml/keep.svg
+        qml/left.svg
         qml/license.svg
         qml/moon.svg
         qml/plus.svg
         qml/redo.svg
         qml/reset.svg
+        qml/right.svg
         qml/settings.svg
         qml/undo.svg
 )

@@ -20,6 +20,7 @@ Game::Game(QObject *parent)
                     otherPlayer->addToScore(26);
                 otherPlayer->clearRedoScores();
             }
+            emit currentRoundChanged();
         });
         connect(player, &Player::stagingScoreChanged, this, [this] {
             QVector<short> stagingScores;
@@ -55,6 +56,11 @@ Game::Game(QObject *parent)
             settings.setValue(QStringLiteral("name"), player->name());
         });
     }
+    connect(this, &Game::currentRoundChanged, this, [this] {
+        QSettings settings;
+        settings.beginGroup(QStringLiteral("saved_game"));
+        settings.setValue(QStringLiteral("current_round"), currentRound());
+    });
 }
 
 Game::~Game()
@@ -123,6 +129,7 @@ void Game::reset()
 
     m_gameOver = false;
     emit gameOverChanged();
+    emit currentRoundChanged();
     deleteSavedGame();
 }
 
@@ -134,6 +141,7 @@ void Game::undoLastMove()
         player->undoLastMove();
         connect(player, &Player::scoreChanged, this, &Game::checkForWinner);
     }
+    emit currentRoundChanged();
     checkForWinner();
 }
 
@@ -141,6 +149,7 @@ void Game::redo()
 {
     for (auto player : m_players)
         player->redo();
+    emit currentRoundChanged();
 }
 
 void Game::restoreSavedGame()

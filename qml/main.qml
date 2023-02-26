@@ -37,6 +37,7 @@ Window {
         property int primary: Material.Indigo
         property int accent: Material.Pink
         property int targetScore: 100
+        property bool showPassDirectionPopup: true
     }
 
     Game {
