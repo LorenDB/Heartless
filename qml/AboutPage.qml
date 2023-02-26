@@ -10,7 +10,8 @@ Page {
 
         ListElement { fontPixelSize: 24; data: qsTr("Heartless") }
         ListElement { fontPixelSize: 16; data: qsTr("Heartless simplifies tracking scores in your Hearts games.") }
-        ListElement { fontPixelSize: 16; data: qsTr("Copyright © Loren Burkholder 2022. All rights reserved. See license for details.") }
+        ListElement { fontPixelSize: 16; data: qsTr("Copyright © Loren Burkholder. See <a href=\"https://github.com/LorenDB/Heartless/blob/master/LICENSE\">license</a> for details.") }
+        ListElement { fontPixelSize: 16; data: qsTr("The source code for Heartless is available on <a href=\"https://github.com/LorenDB/Heartless\">GitHub</a>.") }
         ListElement { fontPixelSize: 24; data: qsTr("Usage") }
         ListElement { fontPixelSize: 16; data: qsTr("To add scores, type them into the score input under each user or click the shoot-the-moon button. Use the buttons at the top of the app to undo, redo, or reset the game. If you want to play to a score other than 100, simply change the target score in the settings.") }
         ListElement { fontPixelSize: 24; data: qsTr("Fun facts") }
@@ -58,6 +59,8 @@ Page {
                             wrapMode: Label.WordWrap
                             font.pixelSize: fontPixelSize
                             font.bold: fontPixelSize > 20
+
+                            onLinkActivated: (link) => Qt.openUrlExternally(link)
                         }
                     }
                 }

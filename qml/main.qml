@@ -81,16 +81,6 @@ Window {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                text: qsTr("View code online")
-                icon.source: Qt.resolvedUrl("code.svg")
-                onClicked: {
-                    drawer.close()
-                    Qt.openUrlExternally("https://github.com/LorenDB/Heartless")
-                }
-            }
-
-            ItemDelegate {
-                Layout.fillWidth: true
                 text: qsTr("About Heartless")
                 icon.source: Qt.resolvedUrl("info.svg")
                 onClicked: {
