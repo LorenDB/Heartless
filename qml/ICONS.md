@@ -25,4 +25,5 @@ If you want to add a new icon but can't find the right one, try looking at [flue
 | reset.svg | Arrow Reset |
 | right.svg | Arrow Right |
 | settings.svg | Settings |
+| trophy.svg | Trophy|
 | undo.svg | Arrow Undo |

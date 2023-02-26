@@ -49,6 +49,7 @@ qt_add_qml_module(appHeartless
         qml/reset.svg
         qml/right.svg
         qml/settings.svg
+        qml/trophy.svg
         qml/undo.svg
 )
 qt_add_translations(appHeartless TS_FILES ${TRANSLATIONS} SOURCES ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/qml)

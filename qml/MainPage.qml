@@ -341,7 +341,7 @@ Page {
                 display: AbstractButton.IconOnly
                 icon.source: {
                     if (game.gameOver)
-                        return Qt.resolvedUrl("")
+                        return Qt.resolvedUrl("trophy.svg")
 
                     switch (game.currentRound % 4) {
                     case 0:
