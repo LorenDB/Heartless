@@ -76,7 +76,7 @@ Game::~Game()
 void Game::setTargetScore(int target)
 {
     // 13 is the lowest possible high score for a game of one round, so don't use anything smaller than that
-    if (target < 13)
+    if (target < 13 || target == m_targetScore)
         return;
 
     m_targetScore = target;
