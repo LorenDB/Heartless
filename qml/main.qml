@@ -33,10 +33,10 @@ Window {
     Settings {
         id: settings
 
-        property int animation: AnimType.Fountain
+        property int animation: AnimType.Balloon
         property int theme: Material.System
-        property int primary: Material.Indigo
-        property int accent: Material.Pink
+        property int primary: Material.Red
+        property int accent: Material.Red
         property int targetScore: 100
         property bool showPassDirectionPopup: true
     }
