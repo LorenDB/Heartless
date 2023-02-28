@@ -87,6 +87,9 @@ bool Game::savedGameAvailable() const
 {
     QSettings settings;
     settings.beginGroup(QStringLiteral("saved_game"));
+    if (settings.allKeys().size() > 0)
+        for (const auto &key: settings.allKeys())
+            qDebug() << "key the nth: " << key << "with value: " << settings.value(key);
     return settings.allKeys().length() > 0;
 }
 
@@ -100,8 +103,12 @@ void Game::checkForWinner()
     {
         for (auto player: m_players)
             player->setWinner(false);
-        m_gameOver = false;
-        emit gameOverChanged();
+
+        if (m_gameOver)
+        {
+            m_gameOver = false;
+            emit gameOverChanged();
+        }
         return;
     }
 
@@ -111,8 +118,11 @@ void Game::checkForWinner()
         else
             player->setWinner(false);
 
-    m_gameOver = true;
-    emit gameOverChanged();
+    if (!m_gameOver)
+    {
+        m_gameOver = true;
+        emit gameOverChanged();
+    }
 
     // if the game is over, no point in saving it
     deleteSavedGame();
@@ -191,6 +201,15 @@ void Game::deleteSavedGame()
     QSettings settings;
     settings.beginGroup(QStringLiteral("saved_game"));
     settings.remove({});
+    settings.endGroup();
+    settings.remove(QStringLiteral("current_round"));
+    for (auto player : m_players)
+    {
+        settings.beginGroup(QStringLiteral("player%1").arg(m_players.indexOf(player)));
+        settings.remove("scores");
+        settings.remove("redoScores");
+        settings.endGroup();
+    }
 }
 
 void Game::commitStagingScores()
