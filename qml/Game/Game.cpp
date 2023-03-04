@@ -193,6 +193,9 @@ void Game::restoreSavedGame()
         settings.endGroup();
     }
 
+    emit currentRoundChanged();
+    emit gameOverChanged();
+
     checkForWinner();
 }
 
@@ -220,4 +223,5 @@ void Game::commitStagingScores()
         player->resetStagingScore();
         player->clearRedoScores();
     }
+    emit currentRoundChanged();
 }
